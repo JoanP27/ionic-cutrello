@@ -1,0 +1,97 @@
+<main>
+  <ion-grid>
+    <ion-row>
+      <ion-col class="ion-display-flex ion-justify-content-center ion-align-content-center ion-padding">
+        <form class="login-form" [formRoot]="loginForm" (submit)="login($event)">
+          <ion-list>
+            <ion-item lines="none" class="ion-text-center">
+              <h2>Log in</h2>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-input 
+                [formField]="loginForm.email"
+                label="Email" 
+                labelPlacement="floating" 
+                placeholder="tu.email@ejemplo.com"
+                errorText="Email is required" 
+                required 
+                name="email" 
+                type="email" 
+                id="email"
+              >
+              </ion-input>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-input 
+                [formField]="loginForm.password"
+                label="Password" 
+                labelPlacement="floating" 
+                placeholder="••••••••"
+                errorText="Password is required" 
+                required 
+                name="password" 
+                type="password" 
+                id="password"
+              >
+              </ion-input>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-button type="submit" color="primary" expand="block">
+                Login
+              </ion-button>
+            </ion-item>
+            <ion-item lines="none" class="ion-text-end">
+              <p>
+                ¿No tienes cuenta todavía?
+                <a>
+                  Regístrate aquí
+                </a>
+              </p>
+            </ion-item>
+          </ion-list>
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</main>
+
+<!--main class="container mx-auto px-4 py-8 mt-16 grow flex items-center justify-center">
+    <div class="w-full max-w-xl">
+      <form id="login-form" (submit)="login($event)" class="bg-white p-8 rounded-lg shadow-md">
+        <h2 class="text-2xl font-bold text-gray-800 mb-8 text-center">Log in</h2>
+        
+        <div class="mb-6">
+          <label for="email" class="block text-gray-700 font-bold mb-2">Email</label>
+          <input [formField]="loginForm.email" type="email" id="email" class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="tu.email@ejemplo.com">
+          @for (error of loginForm.email().errors(); track error.kind) {
+              <div class="error-msg text-xs mt-1 text-red-700">{{error.message}}</div>
+          }
+        </div>
+
+        <div class="mb-6">
+          <label for="password" class="block text-gray-700 font-bold mb-2">Contraseña</label>
+          <input [formField]="loginForm.password" type="password" id="password"  class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="••••••••">
+           @for (error of loginForm.password().errors(); track error.kind) {
+              <div class="error-msg text-xs mt-1 text-red-700">{{error.message}}</div>
+            }
+        </div>
+        <div class="mb-6">
+          <div googleLogin class="btn" (login)="loggedGoogle($event)"></div>
+        </div>
+        
+        <div>
+          <button [disabled]="loginForm().invalid()" type="submit" class="w-full bg-blue-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+            Login
+          </button>
+        </div>
+        <div class="mt-6 text-center">
+          <p class="text-sm text-gray-600">
+            ¿No tienes cuenta todavía?
+            <a [routerLink]="['/auth/register']" class="font-medium text-blue-600 hover:text-blue-500">
+              Regístrate aquí
+            </a>
+          </p>
+        </div>
+      </form>
+    </div>
+  </main-->
