@@ -12,6 +12,6 @@ export const routes: Routes = [
   },
   {
     path: 'tasks',
-    loadComponent: () => import('./tasks/tasks/tasks.page').then( m => m.TasksPage)
-  },
+    loadChildren: () => import('./tasks/tasks.routes').then((m) => m.taskRoutes)
+  }
 ];

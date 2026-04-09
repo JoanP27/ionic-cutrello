@@ -3,7 +3,7 @@ import { IonGrid, IonRow, IonCol, IonList, IonItem, IonInput, IonButton, NavCont
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth-service';
 import { UserLogin } from '../interfaces/auth';
-import { form, required, FormField, FormRoot } from '@angular/forms/signals';
+import { form, required, FormField, FormRoot, email } from '@angular/forms/signals';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 
@@ -26,7 +26,8 @@ export class LoginPage {
 
   loginForm = form(this.loginModel, (schema) => {
     required(schema.email, {message: 'El email no puede estar vacio'});
-    required(schema.password, {message: 'La contraseña no puede estar vacio'})
+    required(schema.password, {message: 'La contraseña no puede estar vacia'})
+    email(schema.email, {message: 'El email debe ser valido'})
   }, {submission: {
     action: async () => this.login()
   }});

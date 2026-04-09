@@ -1,0 +1,26 @@
+  <ion-card>
+    <ion-card-header class="ion-no-padding">
+      <ion-grid>
+        <ion-row class="ion-justify-content-between ion-flex-row ion-align-items-center">
+          <ion-col size="auto">
+            <ion-card-title>
+              <div>{{task().title}}</div>
+            </ion-card-title>
+          </ion-col>
+          <ion-col size="auto">
+            <ion-button shape="round" fill="clear" size="large" (click)="this.onDelete($event)">
+              <ion-icon slot="icon-only" name="close-circle-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-header>
+    
+    <ion-card-content>
+      <ion-select [formField]="this.statusForm" interface="popover" (ionChange)="this.onChange($event)" placeholder="Selecciona el tipo">
+        <ion-select-option [value]="0" aria-selected="true">Pendientes</ion-select-option>
+        <ion-select-option [value]="1">En proceso</ion-select-option>
+        <ion-select-option [value]="2">Terminadas</ion-select-option>
+      </ion-select>
+    </ion-card-content>
+  </ion-card>

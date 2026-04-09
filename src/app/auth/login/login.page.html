@@ -2,7 +2,7 @@
   <ion-grid>
     <ion-row>
       <ion-col class="ion-display-flex ion-justify-content-center ion-align-content-center ion-padding">
-        <form class="login-form" [formRoot]="loginForm" (submit)="login($event)">
+        <form class="login-form" [formRoot]="loginForm">
           <ion-list>
             <ion-item lines="none" class="ion-text-center">
               <h2>Log in</h2>
@@ -13,13 +13,13 @@
                 label="Email" 
                 labelPlacement="floating" 
                 placeholder="tu.email@ejemplo.com"
-                errorText="Email is required" 
-                required 
                 name="email" 
                 type="email" 
                 id="email"
+                [errorText]="loginForm.email().errors().length > 0 ? loginForm.email().errors()[0]?.message : ''"
               >
               </ion-input>
+          
             </ion-item>
             <ion-item lines="none">
               <ion-input 
@@ -27,11 +27,10 @@
                 label="Password" 
                 labelPlacement="floating" 
                 placeholder="••••••••"
-                errorText="Password is required" 
-                required 
                 name="password" 
                 type="password" 
                 id="password"
+                [errorText]="loginForm.password().errors().length > 0 ? loginForm.password().errors()[0]?.message : ''"
               >
               </ion-input>
             </ion-item>
