@@ -17,6 +17,10 @@
   </ion-toolbar>
 </ion-header>
 <ion-content [fullscreen]="true">
+    <ion-refresher #refresher slot="fixed" (ionRefresh)="onRefresh(refresher)">
+      <ion-refresher-content>
+      </ion-refresher-content>
+    </ion-refresher>
     <ion-segment-view>
       <ion-segment-content id="pendientes">
         @for (item of pendientes(); track $index) {

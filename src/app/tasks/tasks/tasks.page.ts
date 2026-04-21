@@ -16,7 +16,10 @@ import {
   IonSegmentView,
   IonFab,
   IonFabButton,
-  IonIcon
+  IonIcon,
+  IonRefresher,
+  IonRefresherContent,
+
 } from '@ionic/angular/standalone';
 import { TaskCardComponent } from "../task-card/task-card.component";
 import { TaskService } from '../services/task-service';
@@ -46,7 +49,9 @@ import { RouterLink } from '@angular/router';
     IonFab,
     IonFabButton,
     IonIcon,
-    RouterLink
+    RouterLink,
+    IonRefresher,
+    IonRefresherContent
   ]
 })
 export class TasksPage {
@@ -73,6 +78,13 @@ export class TasksPage {
       error: (er) => 
         console.error(er)
     });
+  }
+
+  public async onRefresh(refresher: IonRefresher) {
+    setTimeout(() => {
+      this.taskResource.reload()
+      refresher.complete();
+    }, 2000);
   }
 
   public onDelete(task: Task) {
