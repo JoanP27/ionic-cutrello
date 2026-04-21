@@ -4,7 +4,7 @@
         <ion-row class="ion-justify-content-between ion-flex-row ion-align-items-center">
           <ion-col size="auto">
             <ion-card-title>
-              <div>{{task().title}}</div>
+              <div><a [routerLink]="['/tasks/' + task().id]">{{task().title}}</a></div>
             </ion-card-title>
           </ion-col>
           <ion-col size="auto">

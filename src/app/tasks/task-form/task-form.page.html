@@ -45,7 +45,6 @@
                   <ion-datetime [formField]="taskForm.deadLine" id="datetime" presentation="date"></ion-datetime>
                 </ng-template>
               </ion-modal>
-               
             </ion-item>
             <ion-item lines="none">
               @for (error of taskForm.deadLine().errors(); track error.kind) {

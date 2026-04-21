@@ -40,7 +40,7 @@ bootstrapApplication(AppComponent, {
     //provideZoneChangeDetection(),
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
-    provideRouter(routes, withPreloading(PreloadAllModules)),
+    provideRouter(routes, withPreloading(PreloadAllModules), withRouterConfig({paramsInheritanceStrategy: 'always'}), withComponentInputBinding()),
     provideHttpClient(withInterceptors([baseUrlInterceptor, authInterceptor])),
     provideSignalFormsConfig({
       classes: NG_STATUS_CLASSES,

@@ -4,6 +4,7 @@ import { addIcons } from 'ionicons';
 import { closeCircleOutline } from 'ionicons/icons';
 import { Task } from '../interfaces/task';
 import { form, FormField } from '@angular/forms/signals';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-task-card',
@@ -21,7 +22,8 @@ import { form, FormField } from '@angular/forms/signals';
     IonGrid,
     IonRow,
     IonCol,
-    FormField
+    FormField,
+    RouterLink
 ],
 })
 export class TaskCardComponent {

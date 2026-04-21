@@ -19,7 +19,8 @@ export const taskRoutes: Routes = [
     },
     {
         path: ':id',
-        loadComponent: () => import('./task-details/task-details.page').then(m => m.TaskDetailsPage)
+        loadComponent: () => import('./task-details/task-details.page').then(m => m.TaskDetailsPage),
+        loadChildren: () => import('./task-details/tasks-details.routes').then(m => m.TaskDetailsRoutes)
     }
 
 ]
