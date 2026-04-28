@@ -6,47 +6,46 @@
 <ion-content [fullscreen]="true">
   <ion-list>
     <ion-list-header>
-      <h1>Datos de la tarea</h1>
+      <h1>{{this.task().title}}</h1>
     </ion-list-header>
     <ion-item lines="none">
-      <ion-input 
-        [formField]="this.taskForm.title"
-        placeholder="Titulo"
-        label="Titulo"
-        labelPlacement="floating"
-        type="text"
-        id="title"
-        [errorText]="taskForm.title().errors().length > 0 ? taskForm.title().errors()[0]?.message : ''"
-      > 
-      </ion-input>
+      <p>Fecha límite: {{this.task().deadLine | date: 'dd/MM/yyyy'}}</p>
     </ion-item>
 
     <ion-item lines="none">
-      <ion-textarea 
-        [formField]="this.taskForm.description"
-        placeholder="Descripcion"
-        label="Descripcion"
-        labelPlacement="floating"
-        type="text"
-        id="description"
-        [errorText]="taskForm.description().errors().length > 0 ? taskForm.description().errors()[0]?.message : ''"
-      > 
-      </ion-textarea>
+      <ion-button color="primary">Modificar</ion-button>
+      <ion-button color="danger">Eliminar</ion-button>
     </ion-item>
-    <ion-item>
-      <ion-select [formField]="this.taskForm.status" interface="popover" (ionChange)="this.onStatusChange($event)" placeholder="Selecciona el tipo">
+
+    
+
+    <ion-item lines="none">
+      <ion-select [formField]="this.statusForm" interface="popover" (ionChange)="this.onStatusChange($event)" placeholder="Selecciona el tipo">
         <ion-select-option [value]="0" aria-selected="true">Pendientes</ion-select-option>
         <ion-select-option [value]="1">En proceso</ion-select-option>
         <ion-select-option [value]="2">Terminadas</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item lines="none">
+      @if(this.auxFilePath()) {
+        <ion-img [src]="this.auxFilePath()"></ion-img>
+      }
+    </ion-item>
+    
+    <ion-item lines="none">
+      <ion-button color="tertiary" (click)="pickFromGallery()">
+        <ion-icon name="images" slot="start"></ion-icon>
+        Gallery
+      </ion-button>
+    </ion-item>
+
+    <!--ion-item lines="none">
       <ion-datetime-button datetime="datetime"></ion-datetime-button>
       <ion-modal [keepContentsMounted]="true">
         <ng-template>
           <ion-datetime id="datetime" [formField]="taskForm.deadLine" presentation="date"></ion-datetime>
         </ng-template>
       </ion-modal>
-    </ion-item>
+    </ion-item-->
   </ion-list>
 </ion-content>
