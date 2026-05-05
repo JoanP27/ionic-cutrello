@@ -8,16 +8,19 @@
     <ion-list-header>
       <h1>{{this.task().title}}</h1>
     </ion-list-header>
+
+    <ion-item lines="none">
+      <p>{{this.task().description}}</p>
+    </ion-item>
+
     <ion-item lines="none">
       <p>Fecha límite: {{this.task().deadLine | date: 'dd/MM/yyyy'}}</p>
     </ion-item>
 
     <ion-item lines="none">
-      <ion-button color="primary">Modificar</ion-button>
-      <ion-button color="danger">Eliminar</ion-button>
+      <ion-button color="primary" (click)="setEditModal(true)">Modificar</ion-button>
+      <ion-button color="danger" (click)="onDelete()">Eliminar</ion-button>
     </ion-item>
-
-    
 
     <ion-item lines="none">
       <ion-select [formField]="this.statusForm" interface="popover" (ionChange)="this.onStatusChange($event)" placeholder="Selecciona el tipo">
@@ -26,6 +29,9 @@
         <ion-select-option [value]="2">Terminadas</ion-select-option>
       </ion-select>
     </ion-item>
+
+  
+
     <ion-item lines="none">
       @if(this.auxFilePath()) {
         <ion-img [src]="this.auxFilePath()"></ion-img>
@@ -38,6 +44,11 @@
         Gallery
       </ion-button>
     </ion-item>
+    
+    
+
+    
+
 
     <!--ion-item lines="none">
       <ion-datetime-button datetime="datetime"></ion-datetime-button>
@@ -48,4 +59,57 @@
       </ion-modal>
     </ion-item-->
   </ion-list>
+
+  <div olMap [coordinates]="coordinates()" style="height: 20em;">
+    <div gaAutocomplete (locationChange)="changePlace($event)"></div>
+    <div olMarker [coordinates]="coordinates()"></div>
+  </div>
+
+  <ion-modal [isOpen]="this.isEditModalOpen()">
+    <ng-template>
+        <form [formRoot]="taskForm" style="height: 100vh;">
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Editar Tarea</ion-title>
+            <ion-buttons slot="end">
+              <ion-button color="danger" (click)="setEditModal(false)">Cerrar</ion-button>
+              <ion-button color="primary" type="submit">Guardar</ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding" >
+          <ion-item lines="none">
+            <ion-input
+              [formField]="this.taskForm.title"
+              label="Titulo de la tarea"
+              labelPlacement="floating"
+              placeholder="Titulo de la tarea"
+              [errorText]="taskForm.title().errors().length > 0 ? taskForm.title().errors()[0]?.message : ''"
+            />
+          </ion-item>
+          
+          <ion-item lines="none">
+            <ion-textarea
+              [formField]="this.taskForm.description"
+              label="Titulo de la tarea"
+              labelPlacement="floating"
+              placeholder="Titulo de la tarea"
+              [errorText]="taskForm.description().errors().length > 0 ? taskForm.title().errors()[0]?.message : ''"
+            />
+          </ion-item>
+          
+          <ion-item  lines="none" >
+            <ion-datetime-button style="padding-bottom: 1em;" datetime="datetime" class=""/>
+          </ion-item>
+
+
+          <ion-modal [keepContentsMounted]="true">
+            <ng-template>
+              <ion-datetime [formField]="taskForm.deadLine" id="datetime" presentation="date"></ion-datetime>
+            </ng-template>
+          </ion-modal>
+        </ion-content>
+        </form>
+    </ng-template>
+  </ion-modal>
 </ion-content>

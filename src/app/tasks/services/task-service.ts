@@ -5,6 +5,7 @@ import { map, Observable } from 'rxjs';
 import { TaskInsert } from '../interfaces/task-insert';
 import { Comment, CommentResponse, SingleCommentResponse, SubTask, Task } from '../interfaces/task';
 import { SignleTaksResponse } from '../interfaces/signle-taks-response';
+import { SearchResult } from 'src/app/ol-maps/search-result';
 //import { User } from '../../profile/interfaces/user';
 //import { SearchResult } from '../../ol-maps/search-result';
 
@@ -68,13 +69,13 @@ export class TaskService {
     return this.#http.post<SingleCommentResponse>(`${this.#tasksUrl}${idTask}/comments`, comment).pipe(map(t => t.comment))
   }
 
-  /*updateLocation(id: number, result: SearchResult): Observable<Task> {
+  updateLocation(id: number, result: SearchResult): Observable<Task> {
     return this.#http.put<SignleTaksResponse>(`${this.#tasksUrl}${id}`, {
       address: result.address, 
       lat: result.coordinates[0],
       lng: result.coordinates[1]
     }).pipe(map(t => t.task))
-  }*/
+  }
 
   /*removeParticipant(id: number, user: User): Observable<Task> {
     return this.#http.delete<Task>(`${this.#tasksUrl}${id}/participants/`, {})

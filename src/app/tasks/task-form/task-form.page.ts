@@ -19,7 +19,8 @@ import {
   IonModal,
   IonDatetime,
   NavController,
-  IonLabel
+  IonLabel,
+  ToastController
  } from '@ionic/angular/standalone';
 import { TaskInsert } from '../interfaces/task-insert';
 import { form, schema, FormRoot, FormField, required } from '@angular/forms/signals';
@@ -62,6 +63,7 @@ export class TaskFormPage {
     addIcons({ images });
   }
 
+  #toastController = inject(ToastController)
   #taskService = inject(TaskService);
   #nav = inject(NavController);
 
@@ -87,7 +89,15 @@ export class TaskFormPage {
       next: () => {
         this.#nav.navigateForward(['/tasks'])
       },
-      error: (err) => console.error(err)
+      error: async(err) => {
+        const toast = await this.#toastController.create({
+          position: 'bottom',
+          duration: 300,
+          message: 'mensaje'
+        })
+        toast.present()
+        console.error(err)
+      }
     });
   }
 }

@@ -98,5 +98,7 @@ export class TasksPage {
     })
   }
 
-  
+  public ionViewWillEnter() {
+    this.taskResource.reload()
+  }
 }

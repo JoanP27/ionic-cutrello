@@ -35,3 +35,46 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
+
+/* Container for the entire dropdown list */
+.geoapify-autocomplete-items {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Individual suggestion item */
+.geoapify-autocomplete-item {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.geoapify-autocomplete-item:hover {
+  background-color: #e0f7fa;
+}
+
+/* The icon wrapper */
+.geoapify-autocomplete-item .icon {
+  color: #007bff; 
+}
+
+/* The primary text (e.g., Street Name) */
+.geoapify-autocomplete-item .main-part {
+  font-weight: bold;
+  color: #333;
+}
+
+/* The secondary text (e.g., City, Country) */
+.geoapify-autocomplete-item .secondary-part {
+  font-size: 0.85em;
+  color: #777;
+}
+
+/* The secondary text (e.g., City, Country) */
+.geoapify-autocomplete-item .address {
+    display: flex;
+    gap: 0.2em;
+    flex-direction: column;
+}
