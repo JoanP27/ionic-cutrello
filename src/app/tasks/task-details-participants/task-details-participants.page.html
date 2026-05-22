@@ -1,0 +1,45 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>task-details-comments</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <ion-item lines="none">
+      <ion-input
+        placeholder="Buscar participantes"
+        type="text"
+        [formField]="this.searchForm"
+      />
+    </ion-item>
+        @for (r of this.searchResults(); track $index) {
+          <ion-item lines="none">
+            <ion-avatar slot="start">
+              <img [src]="r.avatar"/>
+            </ion-avatar>
+            <ion-label slot="start" style="display: flex; justify-items: center; align-items: center; gap: 20px;">
+              <h2>{{r.name}}</h2>
+            </ion-label>
+            <ion-button [disabled]="this.participantes().filter(p => p.id == r.id).length > 0" slot="end" color="primary" (click)="this.anyadirParticipante(r)">Añadir</ion-button>
+          </ion-item>
+        }
+  </ion-list>
+  <ion-list lines="none" style="margin-top: 0.5em;">
+      @for (p of this.participantes(); track $index) {
+        <ion-item lines="none">
+          <ion-avatar slot="start">
+            <img [src]="p.avatar"/>
+          </ion-avatar>
+          <ion-label slot="start" style="display: flex; justify-items: center; align-items: center; gap: 20px;">
+            <h1>{{p.name}}</h1>
+             @if (this.idCreador() == p.id) {
+              <ion-badge>Creador</ion-badge>
+             }
+          </ion-label>
+          @if (this.idCreador() != p.id) {
+            <ion-button slot="end" color="danger" (click)="this.eliminar(p)">Eliminar</ion-button>
+          }
+        </ion-item>
+      }
+  </ion-list>
+</ion-content>

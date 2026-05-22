@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonBackButton, IonButtons,IonTabs, IonTab, IonTabBar, IonTabButton, IonIcon } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { chatboxEllipsesOutline, information, informationCircle, informationCircleOutline, map } from 'ionicons/icons';
+import { chatboxEllipsesOutline, information, informationCircle, informationCircleOutline, map, person } from 'ionicons/icons';
 import { TaskService } from '../services/task-service';
 
 @Component({
@@ -24,6 +24,7 @@ export class TaskDetailsPage {
     id: 0,
     title: '',
     description: '',
+    creator: 0,
     status: 0,
     filepath: '',
     createdAt: '',
@@ -39,7 +40,7 @@ export class TaskDetailsPage {
   constructor() {
     addIcons({
       informationCircleOutline,
-      map,
+      person,
       chatboxEllipsesOutline
     })
   }

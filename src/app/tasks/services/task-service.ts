@@ -6,6 +6,7 @@ import { TaskInsert } from '../interfaces/task-insert';
 import { Comment, CommentResponse, SingleCommentResponse, SubTask, Task } from '../interfaces/task';
 import { SignleTaksResponse } from '../interfaces/signle-taks-response';
 import { SearchResult } from 'src/app/ol-maps/search-result';
+import { User } from 'src/app/profile/interfaces/user';
 //import { User } from '../../profile/interfaces/user';
 //import { SearchResult } from '../../ol-maps/search-result';
 
@@ -45,9 +46,9 @@ export class TaskService {
     return this.#http.put<SignleTaksResponse>(`${this.#tasksUrl}${id}/status`, { status }).pipe(map((t) => t.task))
   }
 
-  /*addParticipant(id: number, user: User): Observable<Task> {
+  addParticipant(id: number, user: User): Observable<Task> {
     return this.#http.post<Task>(`${this.#tasksUrl}${id}/participants/${user.id}`, {})
-  }*/
+  }
 
   addSubTask(id: number, subtask: SubTask): Observable<SubTask> {
     return this.#http.post<SingleSubTasksResponse>(`${this.#tasksUrl}${id}/subtasks/`, subtask).pipe(map(t => t.subtask))
@@ -77,9 +78,9 @@ export class TaskService {
     }).pipe(map(t => t.task))
   }
 
-  /*removeParticipant(id: number, user: User): Observable<Task> {
-    return this.#http.delete<Task>(`${this.#tasksUrl}${id}/participants/`, {})
-  }*/
+  removeParticipant(id: number, user: User): Observable<Task> {
+    return this.#http.delete<Task>(`${this.#tasksUrl}${id}/participants/${user.id}`)
+  }
 
   deleteTask(id: number): Observable<void>
   {

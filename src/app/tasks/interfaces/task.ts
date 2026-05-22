@@ -15,6 +15,7 @@ export interface Task extends TaskInsert {
   address: string;
   position: number;
   subtasks: SubTask[];
+  participants: User[];
   mine: boolean;
 }
 

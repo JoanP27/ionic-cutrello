@@ -40,7 +40,7 @@ export class LoginPage {
       next: () => {
         this.#nav.navigateForward(['/tasks'])
       },
-      error: (err) => console.error(err)
+      error: (err) => console.error(err.message)
     })
   }
 }

@@ -16,5 +16,9 @@ export const TaskDetailsRoutes: Routes = [
     {
         path: 'comments',
         loadComponent: () => import('../task-details-comments/task-details-comments.page').then(m => m.TaskDetailsCommentsPage)
+    },
+    {
+        path: 'participants',
+        loadComponent: () => import('../task-details-participants/task-details-participants.page').then(m => m.TaskDetailsParticipantsPage)
     }
 ]
