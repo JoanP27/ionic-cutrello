@@ -1,0 +1,9 @@
+<ion-item lines="none" style="margin-bottom: 1em;">
+  <section style="display: flex; gap: 1em; align-items: center;">
+    <ion-checkbox (click)="changeStatus()" [checked]="this.subTask().completed"/>
+    <span>{{this.subTask().description}}</span>
+  </section>
+  <ion-button (click)="this.delete()" slot="end" size="default" fill="clear">
+    <ion-icon slot="icon-only" color="danger" md="trash-outline" ios="trash-sharp"></ion-icon>
+  </ion-button>
+</ion-item>

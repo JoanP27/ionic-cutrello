@@ -20,5 +20,9 @@ export const TaskDetailsRoutes: Routes = [
     {
         path: 'participants',
         loadComponent: () => import('../task-details-participants/task-details-participants.page').then(m => m.TaskDetailsParticipantsPage)
+    },
+    {
+        path: 'subtasks',
+        loadComponent: () => import('../task-details-subtasks/task-details-subtasks.page').then(m => m.TaskDetailsSubtasksPage)
     }
 ]

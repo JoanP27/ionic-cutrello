@@ -18,3 +18,9 @@ export interface ChangePassword {
 export interface SingleRegisterResponse {
     email: string
 }
+
+export interface GoogleLogin {
+    imageUrl: string | null;
+    email: string | null;
+    name: string | null;
+}

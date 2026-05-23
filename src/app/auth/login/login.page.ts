@@ -1,10 +1,13 @@
 import { Component, DestroyRef, inject, signal } from '@angular/core';
-import { IonGrid, IonRow, IonCol, IonList, IonItem, IonInput, IonButton, NavController } from '@ionic/angular/standalone';
+import { IonGrid, IonRow, IonCol, IonList, IonItem, IonInput, IonButton, NavController, IonIcon, IonLabel } from '@ionic/angular/standalone';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../services/auth-service';
-import { UserLogin } from '../interfaces/auth';
+import { GoogleLogin, UserLogin } from '../interfaces/auth';
 import { form, required, FormField, FormRoot, email } from '@angular/forms/signals';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { SocialLogin } from '@capgo/capacitor-social-login';
+import { addIcons } from 'ionicons';
+import { logoGoogle } from 'ionicons/icons';
 
 
 @Component({
@@ -12,17 +15,29 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [IonGrid, IonItem, IonRow, IonCol, IonList, IonInput, IonButton, FormField, FormRoot, RouterLink]
+  imports: [IonGrid, IonItem, IonRow, IonCol, IonList, IonInput, IonButton, FormField, FormRoot, RouterLink, IonIcon, IonLabel]
 })
 export class LoginPage {
   #nav = inject(NavController);
   #authService = inject(AuthService);
   #destroyRef = inject(DestroyRef)
 
+  constructor() {
+    addIcons({
+      logoGoogle
+    })
+  }
+
   loginModel = signal<UserLogin>({
     email: "",
     password: ""
   });
+
+  public loginGoogle = signal<GoogleLogin>({
+    email: '',
+    imageUrl: '',
+    name: ''
+  })
 
   loginForm = form(this.loginModel, (schema) => {
     required(schema.email, {message: 'El email no puede estar vacio'});
@@ -31,6 +46,29 @@ export class LoginPage {
   }, {submission: {
     action: async () => this.login()
   }});
+
+
+  async loginWithGoogle() {
+    try {
+      const resp = await SocialLogin.login({
+        provider: 'google',
+        options: {}
+      });
+      if(resp.result.responseType === 'online' && resp.result.idToken) {
+        this.loginGoogle.set(resp.result.profile);
+
+        this.#authService.logingWithGoogle(resp.result.idToken).subscribe({
+          next: () => {
+            this.#nav.navigateRoot('/tasks')
+          }
+        })
+
+        console.log(resp.result.idToken); // Envía esto a tu servidor
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   login()
   {  

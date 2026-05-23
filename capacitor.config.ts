@@ -7,6 +7,14 @@ const config: CapacitorConfig = {
   android: {
     allowMixedContent: true
   },
+  plugins: {
+    SocialLogin: {
+      google: {
+        // El Client ID del proyecto del profesor que sacamos del JSON
+        webClientId: '389388754773-5jflblnhhm4qfmk8mf0egdu5die7epda.apps.googleusercontent.com',
+      }
+    }
+  }
 };
 
 export default config;

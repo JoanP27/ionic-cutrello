@@ -1,0 +1,31 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>task-details-subtasks</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <section style="padding: 1em;">
+    <ion-item lines="none" style="margin-bottom: 1em;">
+      <form [formRoot]="this.addSubTaskForm" style="width: 100%; padding-bottom: 1em;">
+        <ion-textarea 
+          [formField]="addSubTaskForm.description"
+          label="Descripcion" 
+          labelPlacement="floating" 
+          placeholder="descripcion"
+          name="description" 
+          id="description"
+          [errorText]="addSubTaskForm.description().errors().length > 0 ? addSubTaskForm.description().errors()[0]?.message : ''"
+        >
+        </ion-textarea>
+        <br>
+        <ion-button type="submit" color="primary" fill="solid" size="default" style="width: 100%;">
+          Añadir subtarea
+        </ion-button>  
+      </form>
+    </ion-item>
+    @for (s of this.subtareas(); track $index) {
+      <app-task-subtask-item (subTaskDeleted)="this.deleteSubTask(s)" [subTask]="s"></app-task-subtask-item>
+    }
+  </section>
+</ion-content>

@@ -23,6 +23,7 @@ import {
   SignalFormsConfig,
 } from '@angular/forms/signals';
 import { authInterceptor } from './app/shared/interceptors/auth-interceptor';
+import { provideGoogleId } from './app/shared/google-login/google-login.config';
 
 export const NG_STATUS_CLASSES: SignalFormsConfig['classes'] = {
   'ng-touched': ({ state }) => state().touched(),
@@ -42,6 +43,7 @@ bootstrapApplication(AppComponent, {
     provideIonicAngular(),
     provideRouter(routes, withPreloading(PreloadAllModules), withRouterConfig({paramsInheritanceStrategy: 'always'}), withComponentInputBinding()),
     provideHttpClient(withInterceptors([baseUrlInterceptor, authInterceptor])),
+    provideGoogleId('389388754773-5jflblnhhm4qfmk8mf0egdu5die7epda.apps.googleusercontent.com'),
     provideSignalFormsConfig({
       classes: NG_STATUS_CLASSES,
     }),
