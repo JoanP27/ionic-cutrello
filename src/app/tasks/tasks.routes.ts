@@ -1,4 +1,5 @@
 import { Routes } from "@angular/router";
+import { loginActivateGuard } from "../shared/guards/login-activate-guard";
 //import { leavePageGuard } from "../shared/guards/leave-page-guard";
 //import { numericIdGuard } from "../shared/guards/numeric-id-guard";
 //import { loginActivateGuard } from "../shared/guards/login-activate-guard";

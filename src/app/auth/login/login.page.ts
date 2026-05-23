@@ -1,6 +1,6 @@
 import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { IonGrid, IonRow, IonCol, IonList, IonItem, IonInput, IonButton, NavController } from '@ionic/angular/standalone';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../services/auth-service';
 import { UserLogin } from '../interfaces/auth';
 import { form, required, FormField, FormRoot, email } from '@angular/forms/signals';
@@ -12,7 +12,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [IonGrid, IonItem, IonRow, IonCol, IonList, IonInput, IonButton, FormField, FormRoot]
+  imports: [IonGrid, IonItem, IonRow, IonCol, IonList, IonInput, IonButton, FormField, FormRoot, RouterLink]
 })
 export class LoginPage {
   #nav = inject(NavController);

@@ -9,5 +9,9 @@ export const authRoutes: Routes = [
   {
     path: 'login',
     loadComponent: () => import('./login/login.page').then(m => m.LoginPage)
-  }
+  },
+  {
+    path: 'register',
+     title: "Register | Cutrello", loadComponent: () => import('./register/register.page').then(r => r.RegisterPage)},
+
 ];

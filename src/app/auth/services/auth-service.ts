@@ -36,27 +36,6 @@ export class AuthService {
   }
 
   public isLogged(): Observable<boolean> {
-    const currentToken = localStorage.getItem('token')
-    if(!this.#logged() && !currentToken) {
-      const result : Observable<boolean> = of(false);
-      return result;
-    }
-    
-    if(this.#logged()) {
-      const result : Observable<boolean> = of(true);
-      return result;
-    }
-
-    /*return this.#http.get(`${this.#authUrl}validate`).pipe(map(() => {
-      this.#logged.set(true);
-      return true;
-    }),
-    catchError(async (er) => {
-      console.log(er)
-      await Preferences.remove({key: 'fs-token'})
-      return of(false);
-    })
-  )*/
     return from(Preferences.get({key: 'fs-token'})).pipe(switchMap((token) => {
       if(!token.value) {
         return of(false)

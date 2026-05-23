@@ -1,0 +1,73 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Registrarse</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" >
+  <section style="padding: 1em;">
+  <ion-list>
+    <form [formRoot]="this.registerForm" >
+      <ion-item lines="none">
+        <ion-input
+          [formField]="this.registerForm.name"
+          label="Nombre"
+          labelPlacement="floating"
+          placeholder="Nombre del usuario"
+          [errorText]="this.registerForm.name().errors().length > 0 ? this.registerForm.name().errors()[0]?.message : ''"
+        />
+      </ion-item>
+      <ion-item lines="none">
+      <ion-input
+          [formField]="this.registerForm.email"
+          label="Correo electronico"
+          labelPlacement="floating"
+          placeholder="Correo electronico del usuario"
+          [errorText]="this.registerForm.email().errors().length > 0 ? this.registerForm.email().errors()[0]?.message : ''"
+        />
+      </ion-item>
+      <ion-item lines="none">
+      <ion-input
+          type="password"
+          [formField]="this.registerForm.password"
+          label="Contraseña"
+          labelPlacement="floating"
+          placeholder="Contraseña"
+          [errorText]="this.registerForm.password().errors().length > 0 ? this.registerForm.password().errors()[0]?.message : ''"
+        />
+      </ion-item>
+      <ion-item lines="none">
+      <ion-input
+          type="password"
+          [formField]="this.registerForm.repassword"
+          label="Repetir contraseña"
+          labelPlacement="floating"
+          placeholder="Repetir contraseña"
+          [errorText]="this.registerForm.repassword().errors().length > 0 ? this.registerForm.repassword().errors()[0]?.message : ''"
+        />
+      </ion-item>
+      <ion-item lines="none">
+        @if(this.auxAvatar()) {
+          <ion-img [src]="this.auxAvatar()"></ion-img>
+        }
+      </ion-item>
+      <ion-item lines="none">
+      <ion-button color="tertiary" (click)="pickFromGallery()">
+        <ion-icon name="images" slot="start"></ion-icon>
+        Seleccionar avatar
+      </ion-button>
+      </ion-item>
+
+      <ion-item lines="none" style="width: 100%;">
+        <ion-button type="submit" color="primary" fill="solid" size="default" style="width: 100%;">Registrarse</ion-button>        
+      </ion-item>
+      <ion-item lines="none" style="width: 100%;">
+        <ion-button 
+        [routerLink]="['/auth/login']" 
+        [routerDirection]="'root'"
+        type="button" color="danger" fill="solid" size="default" style="width: 100%;">Log in</ion-button>        
+      </ion-item>
+    </form>
+  </ion-list>
+  </section>
+</ion-content>

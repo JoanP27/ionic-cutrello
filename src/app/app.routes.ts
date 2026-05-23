@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { loginActivateGuard } from './shared/guards/login-activate-guard';
 
 export const routes: Routes = [
   {
@@ -12,10 +13,12 @@ export const routes: Routes = [
   },
   {
     path: 'tasks',
-    loadChildren: () => import('./tasks/tasks.routes').then((m) => m.taskRoutes)
+    loadChildren: () => import('./tasks/tasks.routes').then((m) => m.taskRoutes),
+    canActivate: [loginActivateGuard]
   },
   {
     path: 'profile',
-    loadChildren: () => import('./profile/profile.routes').then((p) => p.routes)
+    loadChildren: () => import('./profile/profile.routes').then((p) => p.routes),
+    canActivate: [loginActivateGuard]
   }
 ];

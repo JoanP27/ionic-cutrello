@@ -3,7 +3,7 @@ import { Component, effect, inject, linkedSignal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { IonApp, IonSplitPane, IonMenu, IonContent, IonList, IonListHeader, IonNote, IonMenuToggle, IonItem, IonIcon, IonLabel, IonRouterOutlet, IonRouterLink, IonHeader, IonToolbar, IonAvatar, IonImg, IonFabButton, IonButton, IonButtons, NavController } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, heartOutline, heartSharp, archiveOutline, archiveSharp, trashOutline, trashSharp, warningOutline, warningSharp, bookmarkOutline, bookmarkSharp, logOut, logOutOutline, home, homeOutline, homeSharp, person, personSharp, personOutline } from 'ionicons/icons';
+import { mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, heartOutline, heartSharp, archiveOutline, archiveSharp, trashOutline, trashSharp, warningOutline, warningSharp, bookmarkOutline, bookmarkSharp, logOut, logOutOutline, home, homeOutline, homeSharp, person, personSharp, personOutline, logInOutline, logInSharp } from 'ionicons/icons';
 import { AuthService } from './auth/services/auth-service';
 import { ProfileService } from './profile/services/profile-service';
 
@@ -47,7 +47,9 @@ export class AppComponent {
       homeOutline,
       homeSharp,
       personSharp,
-      personOutline
+      personOutline,
+      logInOutline,
+      logInSharp
     });
   }
 }
