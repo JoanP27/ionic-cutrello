@@ -1,0 +1,108 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Perfil</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <section style="display: flex; align-items: start; height: 100%; padding: 1em;">
+    <ion-list style="display: flex; justify-content: center; flex-direction: column; align-items: center; width: 100%;">
+    <ion-item lines="none">
+      <ion-avatar style="width: 10em; height: 10em;">
+        <ion-img [src]="this.user().avatar" />
+      </ion-avatar>
+    </ion-item>
+    <br>
+    <ion-item lines="none" style="width: 100%;">
+        <ion-button (click)="this.changeProfileFormVisibility(true)" color="primary" fill="solid" size="default" style="width: 100%;">Editar perfil</ion-button>        
+    </ion-item>
+    <ion-item lines="none" style="width: 100%;">
+        <ion-button (click)="this.changePasswordFormVisibility(true)" color="secondary" fill="solid" size="default" style="width: 100%;">Cambiar contraseña</ion-button>
+    </ion-item>
+  </ion-list>
+  </section>
+  <ion-modal [isOpen]="this.isProfileFormVisible()">
+    <ng-template>
+      <form [formRoot]="this.profileForm" style="height: 100vh;">
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Editar perfil</ion-title>
+            <ion-buttons slot="end">
+              <ion-button color="danger" (click)="this.changeProfileFormVisibility(false)">Cerrar</ion-button>
+              <ion-button color="primary" type="submit">Guardar</ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+          <ion-content class="ion-padding">
+            <ion-list>
+              <ion-item lines="none">
+                <ion-input
+                  [formField]="this.profileForm.name"
+                  label="Nombre"
+                  labelPlacement="floating"
+                  placeholder="Nombre del usuario"
+                  [errorText]="this.profileForm.name().errors().length > 0 ? this.profileForm.name().errors()[0]?.message : ''"
+                />
+              </ion-item>
+              <ion-item lines="none">
+                <ion-input
+                  [formField]="this.profileForm.email"
+                  label="Correo electronico"
+                  labelPlacement="floating"
+                  placeholder="Correo electronico"
+                  [errorText]="this.profileForm.email().errors().length > 0 ? this.profileForm.email().errors()[0]?.message : ''"
+                />
+              </ion-item>
+            </ion-list>
+          </ion-content>
+      </form>
+    </ng-template>
+  </ion-modal>
+  <ion-modal [isOpen]="this.isPasswordFormVisible()">
+    <ng-template>
+      <form [formRoot]="this.changePasswordForm" style="height: 100vh;">
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Editar perfil</ion-title>
+            <ion-buttons slot="end">
+              <ion-button color="danger" (click)="this.changePasswordFormVisibility(false)">Cerrar</ion-button>
+              <ion-button color="primary" type="submit">Guardar</ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+          <ion-content class="ion-padding">
+            <ion-list>
+              <ion-item lines="none">
+                <ion-input
+                  [formField]="this.changePasswordForm.password"
+                  label="Contraseña"
+                  labelPlacement="floating"
+                  placeholder="Contraseña"
+                  type="password"
+                  [errorText]="this.changePasswordForm.password().errors().length > 0 ? this.changePasswordForm.password().errors()[0]?.message : ''"
+                />
+              </ion-item>
+              <ion-item lines="none">
+                <ion-input
+                  [formField]="this.changePasswordForm.repassword"
+                  label="Repite la contraseña"
+                  labelPlacement="floating"
+                  placeholder="Repite la contraseña"
+                  type="password"
+                  [errorText]="this.changePasswordForm.repassword().errors().length > 0 ? this.changePasswordForm.repassword().errors()[0]?.message : ''"
+                />
+              </ion-item>
+            </ion-list>
+          </ion-content>
+      </form>
+    </ng-template>
+  </ion-modal>
+</ion-content>

@@ -1,17 +1,39 @@
 <ion-app>
-  <ion-split-pane >
-    <ion-router-outlet id="main-content"></ion-router-outlet>
-  </ion-split-pane>
-</ion-app>
-
-  <!--ion-split-pane contentId="main-content">
+  <ion-split-pane contentId="main-content">
     <ion-menu contentId="main-content" type="overlay">
+      <ion-header>
+        <ion-toolbar color="light">
+          @if(this.user() != undefined){ 
+            <ion-item color="light">
+              <ion-avatar slot="start">
+                <ion-img [src]="user()?.avatar"></ion-img>
+              </ion-avatar>
+              <ion-label>
+                <h2>{{user()?.name}}</h2>
+                <p>{{user()?.email}}</p>
+              </ion-label>
+              <ion-button slot="end" fill="clear" size="large"
+                style="padding: 0 !important;"
+                (click)="this.logOut()"
+              >
+                <ion-icon slot="icon-only" color="danger" name="log-out-outline"></ion-icon>
+              </ion-button>
+            </ion-item>
+          } @else {
+            <ion-item color="light">
+              <ion-button slot="end" fill="clear" size="large"
+                style="padding: 0 !important;"
+              >
+                <p>Iniciar sesion</p>
+                <ion-icon color="danger" name="log-out-outline"></ion-icon>
+              </ion-button>
+            </ion-item>
+          }
+        </ion-toolbar>
+      </ion-header>
       <ion-content>
         <ion-list id="inbox-list">
-          <ion-list-header>Inbox</ion-list-header>
-          <ion-note>hi&#64;ionicframework.com</ion-note>
-
-          @for (p of appPages; track p; let i = $index) {
+          @for (p of appPages(); track p; let i = $index) {
             <ion-menu-toggle auto-hide="false">
               <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
                 <ion-icon aria-hidden="true" slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
@@ -20,18 +42,8 @@
             </ion-menu-toggle>
           }
         </ion-list>
-
-        <ion-list id="labels-list">
-          <ion-list-header>Labels</ion-list-header>
-
-          @for (label of labels; track label) {
-            <ion-item lines="none">
-              <ion-icon aria-hidden="true" slot="start" ios="bookmark-outline" md="bookmark-sharp"></ion-icon>
-              <ion-label>{{ label }}</ion-label>
-            </ion-item>
-          }
-        </ion-list>
       </ion-content>
     </ion-menu>
     <ion-router-outlet id="main-content"></ion-router-outlet>
-  </ion-split-pane-->
+  </ion-split-pane>
+</ion-app>  
