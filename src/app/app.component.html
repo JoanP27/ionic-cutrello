@@ -3,7 +3,7 @@
     <ion-menu contentId="main-content" type="overlay">
       <ion-header>
         <ion-toolbar color="light">
-          @if(this.user() != undefined){ 
+          @if(this.sesion()){ 
             <ion-item color="light">
               <ion-avatar slot="start">
                 <ion-img [src]="user()?.avatar"></ion-img>

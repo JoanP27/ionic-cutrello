@@ -23,7 +23,7 @@ export class AppComponent {
   #navController = inject(NavController)
   #platform = inject(Platform);
 
-  
+  public sesion = this.#authService.getLogged()
 
   public user = linkedSignal(() =>
      this.#userResource.hasValue() ? this.#userResource.value().user : undefined)
@@ -56,7 +56,14 @@ export class AppComponent {
     });
 
     this.initializeApp()
+
+    effect(() => {
+      if(this.sesion()) {
+        this.#userResource.reload()
+      }
+    });
   }
+  
   async initializeApp() {
       await this.#platform.ready();
       await SocialLogin.initialize({
