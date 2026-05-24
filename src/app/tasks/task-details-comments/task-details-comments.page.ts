@@ -8,6 +8,7 @@ import { Comment, CommentResponse } from '../interfaces/task';
 import { addIcons } from 'ionicons';
 import { add, text } from 'ionicons/icons';
 import { InfiniteScrollCustomEvent, IonInfiniteScrollCustomEvent } from '@ionic/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-task-details-comments',
@@ -35,7 +36,8 @@ import { InfiniteScrollCustomEvent, IonInfiniteScrollCustomEvent } from '@ionic/
     IonFabButton,
     IonIcon,
     IonInfiniteScroll,
-    IonInfiniteScrollContent
+    IonInfiniteScrollContent,
+    RouterLink
 ]
 })
 export class TaskDetailsCommentsPage {
@@ -127,10 +129,13 @@ export class TaskDetailsCommentsPage {
     this.#commentsResoure.reload()
   }
   onIonInfinite(event: InfiniteScrollCustomEvent) {
+    
+
+
     this.page.update((p) => p + 1);
   
     setTimeout(() => {
-      event?.target?.complete
+      event?.target?.complete()
     }, 500);
   }
 

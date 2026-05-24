@@ -20,13 +20,17 @@
         <ion-img [src]="this.user().avatar" />
       </ion-avatar>
     </ion-item>
-    <br>
-    <ion-item lines="none" style="width: 100%;">
+    <ion-item lines="none">
+      <h2>{{this.user().name}}</h2>
+    </ion-item>
+    @if (this.user().me) {
+      <ion-item lines="none" style="width: 100%;">
         <ion-button (click)="this.changeProfileFormVisibility(true)" color="primary" fill="solid" size="default" style="width: 100%;">Editar perfil</ion-button>        
-    </ion-item>
-    <ion-item lines="none" style="width: 100%;">
-        <ion-button (click)="this.changePasswordFormVisibility(true)" color="secondary" fill="solid" size="default" style="width: 100%;">Cambiar contraseña</ion-button>
-    </ion-item>
+      </ion-item>
+      <ion-item lines="none" style="width: 100%;">
+          <ion-button (click)="this.changePasswordFormVisibility(true)" color="secondary" fill="solid" size="default" style="width: 100%;">Cambiar contraseña</ion-button>
+      </ion-item>
+    }
   </ion-list>
   </section>
   <ion-modal [isOpen]="this.isProfileFormVisible()">
@@ -60,6 +64,12 @@
                   placeholder="Correo electronico"
                   [errorText]="this.profileForm.email().errors().length > 0 ? this.profileForm.email().errors()[0]?.message : ''"
                 />
+              </ion-item>
+              <ion-item lines="none">
+                <ion-button color="primary" style="width: 100%;" (click)="this.pickFromGallery()">Seleccionar el avatar de la galeria</ion-button>
+              </ion-item>
+              <ion-item lines="none">
+                <ion-button color="primary" style="width: 100%;" (click)="this.takePhoto()">Capturar el avatar</ion-button>
               </ion-item>
             </ion-list>
           </ion-content>

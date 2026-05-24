@@ -16,7 +16,7 @@
             <img [src]="p.avatar"/>
           </ion-avatar>
           <ion-label slot="start" style="display: flex; justify-items: center; align-items: center; gap: 20px;">
-            <h1>{{p.name}}</h1>
+            <h1><a  style="text-decoration: none;" [routerLink]="['/profile/' + p.id]">{{p.name}}</a></h1>
              @if (this.idCreador() == p.id) {
               <ion-badge>Creador</ion-badge>
              }
@@ -52,7 +52,7 @@
                 <img [src]="r.avatar"/>
               </ion-avatar>
               <ion-label slot="start" style="display: flex; justify-items: center; align-items: center; gap: 20px;">
-                <h2>{{r.name}}</h2>
+                <h2><a (click)="changeAddParticipantVisibility(false)" [routerLink]="['/profile/' + r.id]">{{r.name}}</a></h2>
               </ion-label>
               <ion-button [disabled]="this.participantes().filter(p => p.id == r.id).length > 0" slot="end" color="primary" (click)="this.anyadirParticipante(r)">Añadir</ion-button>
             </ion-item>

@@ -7,6 +7,7 @@ import { User } from '../interfaces/user';
 import { form, required, validate, FormRoot, FormField } from '@angular/forms/signals';
 import { samePassword } from 'src/app/shared/validators/samePassword';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 
 @Component({
   selector: 'app-profile-page',
@@ -38,6 +39,7 @@ export class ProfilePagePage {
   protected profileResource = this.#profileService.getSingleUserResource(this.id);
   protected myProfileResource = this.#profileService.getMyUserProfile();
 
+
   protected user = linkedSignal<User>(() => {
 
     const defaultUser = {
@@ -57,6 +59,9 @@ export class ProfilePagePage {
     
     return this.myProfileResource.value()?.user ?? defaultUser;
   })
+
+  public auxAvatar = linkedSignal(() => this.user().avatar)
+
 
   protected profileForm = form(this.user, (schema) => {
     required(schema.name, {message: 'El nombre debe ser obligatorio'});
@@ -137,5 +142,30 @@ export class ProfilePagePage {
       })
     })
     */
+  }
+
+  async takePhoto() {
+    const photo = await Camera.getPhoto({
+      source: CameraSource.Camera,
+      quality: 90,
+      width: 400,
+      //allowEditing: true, // El usuario puede editar la foto antes de devolverla
+      resultType: CameraResultType.DataUrl, // Base64 (url encoded)
+    });
+
+    this.auxAvatar.set(photo.dataUrl as string);
+    this.user().avatar = (photo.dataUrl as string);
+  }
+
+  public async pickFromGallery() {
+    const photo = await Camera.getPhoto({
+      source: CameraSource.Photos,
+      height: 400,
+      width: 400,
+      //allowEditing: true,
+      resultType: CameraResultType.DataUrl, // Base64 (url encoded)
+    });
+    this.auxAvatar.set(photo.dataUrl as string);
+    this.user().avatar = (photo.dataUrl as string);
   }
 }

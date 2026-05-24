@@ -1,6 +1,7 @@
 export interface UserLogin {
     email: string,
-    password: string
+    password: string,
+    firebaseToken?: string
 }
 export interface AuthToken {
     accessToken: string

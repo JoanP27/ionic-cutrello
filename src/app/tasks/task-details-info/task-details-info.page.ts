@@ -72,7 +72,7 @@ export class TaskDetailsInfoPage {
   #taskService = inject(TaskService)
   #destroyRef = inject(DestroyRef);
   #nav = inject(NavController);
-
+  #alertController = inject(AlertController)
 
   auxStatus = linkedSignal(() => this.task().status);
   auxFilePath = linkedSignal(() => this.task().filepath);
@@ -95,12 +95,49 @@ export class TaskDetailsInfoPage {
       error: (er) => console.error(er)
     })
   }
+  
 
   public async onDelete() {
-    const result = this.#taskService.deleteTask(this.task().id)
+
+    let acceptPressed = false;
+    const alert = await this.#alertController.create({
+      header: 'Eliminar tarea',
+      message: '¿Estas seguro que quieres eliminar esta tarea?',
+      buttons: [
+        {
+          text: 'Aceptar',
+          role: 'confirm',
+          handler: () => acceptPressed = true
+        },
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+        }
+      ]
+    });
+
+    await alert.present()
+
+    await alert.onDidDismiss()
+
+    if(acceptPressed) {
+      const result = this.#taskService.deleteTask(this.task().id)
+      result.subscribe({
+        next: () => {
+          this.#nav.back()
+        },
+        error: (er) => console.error(er)
+      })
+    }
+
+   
+  }
+
+  public async removeImage() {
+    const result = this.#taskService.updateImage(this.task().id, '')
     result.subscribe({
-      next: () => {
-        this.#nav.back()
+      next: (t) => {
+        this.task.update(() => t)
       },
       error: (er) => console.error(er)
     })
@@ -123,27 +160,6 @@ export class TaskDetailsInfoPage {
     LaunchNavigator.navigate({ destination: [ this.coordinates()[1], this.coordinates()[0] ]});
   }
 
- /* public async showEditAlert() {
-    const alert = await this.#alertController.create({
-      header: 'Editar Tarea',
-      inputs: [
-        {
-          name: 'Titulo',
-          type: 'text',
-          placeholder: 'titulo de la tarea'
-        },
-        {
-          name: 'Descripcion',
-          type: 'textarea',
-          placeholder: 'Descripcion de la tarea'
-        }
-      ]
-    });
-
-    await alert.present();
-
-    const result = await alert.onDidDismiss()
-  }*/
 
   coordinates = linkedSignal<[number, number]>(() => [this.task().lat, this.task().lng]);
 
@@ -168,8 +184,7 @@ export class TaskDetailsInfoPage {
   public async pickFromGallery() {
     const photo = await Camera.getPhoto({
       source: CameraSource.Photos,
-      height: 640,
-      width: 640,
+      width: 1024,
       // allowEditing: true,
       resultType: CameraResultType.DataUrl, // Base64 (url encoded)
     });

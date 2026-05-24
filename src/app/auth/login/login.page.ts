@@ -1,5 +1,5 @@
 import { Component, DestroyRef, inject, signal } from '@angular/core';
-import { IonGrid, IonRow, IonCol, IonList, IonItem, IonInput, IonButton, NavController, IonIcon, IonLabel } from '@ionic/angular/standalone';
+import { IonGrid, IonRow, IonCol, IonList, IonItem, IonInput, IonButton, NavController, IonIcon, IonLabel, Platform } from '@ionic/angular/standalone';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../services/auth-service';
 import { GoogleLogin, UserLogin } from '../interfaces/auth';
@@ -8,6 +8,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SocialLogin } from '@capgo/capacitor-social-login';
 import { addIcons } from 'ionicons';
 import { logoFacebook, logoGoogle } from 'ionicons/icons';
+import { PushNotifications, Token } from '@capacitor/push-notifications';
 
 
 @Component({
@@ -21,6 +22,7 @@ export class LoginPage {
   #nav = inject(NavController);
   #authService = inject(AuthService);
   #destroyRef = inject(DestroyRef)
+  #platform = inject(Platform)
 
   constructor() {
     // Iconos
@@ -28,12 +30,29 @@ export class LoginPage {
       logoGoogle,
       logoFacebook
     })
+
+    if (this.#platform.is('capacitor')) {
+      console.log('entra aqui')
+      PushNotifications.register();
+
+      // On success, we should be able to receive notifications
+      PushNotifications.addListener('registration', (token: Token) => {
+        console.log(token)
+        this.loginModel().firebaseToken = token.value;
+      });
+
+      PushNotifications.addListener('registrationError', (err) => {
+        console.error(err.error)
+      });
+    
+    }
   }
 
   // Formularios de login y login de google
   loginModel = signal<UserLogin>({
     email: "",
-    password: ""
+    password: "",
+    firebaseToken: ''
   });
 
   public loginGoogle = signal<GoogleLogin>({

@@ -37,6 +37,10 @@ export class TaskDetailsPage {
     mine: false
   })
 
+  public ionViewWillEnter() {
+    this.#taskResource.reload()
+  }
+
   constructor() {
     addIcons({
       informationCircleOutline,

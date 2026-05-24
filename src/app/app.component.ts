@@ -7,6 +7,9 @@ import { mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, heartOutlin
 import { AuthService } from './auth/services/auth-service';
 import { ProfileService } from './profile/services/profile-service';
 import { SocialLogin } from '@capgo/capacitor-social-login';
+import { ActionPerformed, PushNotifications, PushNotificationSchema } from '@capacitor/push-notifications';
+import { Toast } from '@capacitor/toast';
+
 
 
 @Component({
@@ -76,6 +79,37 @@ export class AppComponent {
           clientToken: '7186128b054a011a92d1dbdfdcdb0e4b',
         },
       });
-    }
+
+      if(this.#platform.is('capacitor')){
+        const res = await PushNotifications.checkPermissions();
+        if(res.receive !== 'granted') {
+          await PushNotifications.requestPermissions();
+        }
+
+        PushNotifications.addListener(
+        'pushNotificationReceived',
+        async (notification: PushNotificationSchema) => {
+          await Toast.show({
+            text: notification.title ?? '',
+            duration: 'long',
+            position: 'bottom',
+          });
+        });
+
+        // Acción cuando el usuario pulsa en la notificación y se abre al app (segundo plano)
+        PushNotifications.addListener(
+          'pushNotificationActionPerformed',
+          (notification: ActionPerformed) => {
+            if (notification.notification.data.prodId) {
+              this.#navController.navigateRoot([
+                '/products',
+                notification.notification.data.prodId,
+                'comments',
+              ]);
+            }
+          }
+        );
+      }
+  }
 
 }

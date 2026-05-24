@@ -8,6 +8,9 @@ const config: CapacitorConfig = {
     allowMixedContent: true
   },
   plugins: {
+    PushNotifications: {
+      presentationOptions: [],
+    },
     SocialLogin: {
       providers: {
         google: true,

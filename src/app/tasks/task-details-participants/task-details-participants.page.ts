@@ -10,13 +10,14 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TaskDetailsPage } from '../task-details/task-details.page';
 import { addIcons } from 'ionicons';
 import { add } from 'ionicons/icons';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-task-details-participants',
   templateUrl: './task-details-participants.page.html',
   styleUrls: ['./task-details-participants.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonList, IonItem, IonAvatar, IonLabel, IonBadge, IonButton, IonFab, IonFabButton, IonIcon, IonInput, FormField, IonModal, IonButtons]
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonList, IonItem, IonAvatar, IonLabel, IonBadge, IonButton, IonFab, IonFabButton, IonIcon, IonInput, FormField, IonModal, IonButtons, RouterLink]
 })
 export class TaskDetailsParticipantsPage {
   #service = inject(ProfileService)
@@ -78,6 +79,9 @@ export class TaskDetailsParticipantsPage {
       });  
     }
   }
+
+  
+
   constructor() { 
     addIcons(
       {
