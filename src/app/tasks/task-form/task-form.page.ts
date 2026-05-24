@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, input, linkedSignal, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { 
@@ -28,6 +28,7 @@ import { addIcons } from 'ionicons';
 import { images } from 'ionicons/icons';
 import { TaskService } from '../services/task-service';
 import { minDate } from 'src/app/shared/validators/minDay';
+import { Task } from '../interfaces/task';
 
 @Component({
   selector: 'app-task-form',
@@ -67,12 +68,18 @@ export class TaskFormPage {
   #taskService = inject(TaskService);
   #nav = inject(NavController);
 
-  public taskModel = signal<TaskInsert>({
+  id = input.required<number>()
+
+  #taskResource = this.#taskService.getSingleTaskResource(this.id);
+
+  taskModel = linkedSignal(() => this.#taskResource.hasValue() ? this.#taskResource.value()?.task : {
     title: '',
     description: '',
     filepath: '',
     deadLine: new Date().toISOString().split('T')[0]
-  });
+  })
+
+ 
 
   public taskForm = form(this.taskModel, (schema) => {
     required(schema.title, {message: 'El titulo no puede estar vacio'});
@@ -83,21 +90,41 @@ export class TaskFormPage {
   }});
 
   public onSubmit() {
-    const result = this.#taskService.addTask({...this.taskForm().value()});
+    
+    if(this.id() > 0) {
+      const result = this.#taskService.updateTask({...this.taskForm().value()} as Task);
 
-    result.subscribe({
-      next: () => {
-        this.#nav.navigateForward(['/tasks'])
-      },
-      error: async(err) => {
-        const toast = await this.#toastController.create({
-          position: 'bottom',
-          duration: 300,
-          message: 'mensaje'
-        })
-        toast.present()
-        console.error(err)
-      }
-    });
+      result.subscribe({
+        next: () => {
+          this.#nav.navigateRoot(['/tasks/' + this.id()])
+        },
+        error: async(err) => {
+          const toast = await this.#toastController.create({
+            position: 'bottom',
+            duration: 300,
+            message: 'mensaje'
+          })
+          toast.present()
+          console.error(err)
+        }
+      });
+    } else {
+      const result = this.#taskService.addTask({...this.taskForm().value()});
+
+      result.subscribe({
+        next: () => {
+          this.#nav.navigateRoot(['/tasks'])
+        },
+        error: async(err) => {
+          const toast = await this.#toastController.create({
+            position: 'bottom',
+            duration: 300,
+            message: 'mensaje'
+          })
+          toast.present()
+          console.error(err)
+        }
+      });
+    }
   }
 }

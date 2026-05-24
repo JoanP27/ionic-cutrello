@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Nueva tarea</ion-title>
+    <ion-title>{{this.id() > 0 ? 'Modificar Tarea':'Añadir Tarea'}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -11,7 +11,7 @@
         <form class="login-form" [formRoot]="taskForm">
           <ion-list>
             <ion-item lines="none" class="ion-text-center">
-              <h2>Añadir nueva tarea</h2>
+              <h2>{{this.id() > 0 ? 'Modificar una tarea':'Añadir una nueva tarea'}}</h2>
             </ion-item>
             <ion-item lines="none">
               <ion-input 

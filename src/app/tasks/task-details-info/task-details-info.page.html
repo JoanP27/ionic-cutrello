@@ -4,6 +4,11 @@
   </ion-toolbar>
 </ion-header>
 <ion-content [fullscreen]="true">
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="showMap()">
+      <ion-icon name="map" ></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
   <ion-list>
     <ion-list-header>
       <h1>{{this.task().title}}</h1>
@@ -18,7 +23,7 @@
     </ion-item>
 
     <ion-item lines="none">
-      <ion-button color="primary" (click)="setEditModal(true)">Modificar</ion-button>
+      <ion-button color="primary" [routerLink]="['/tasks/add/' + this.task().id]">Modificar</ion-button>
       <ion-button color="danger" (click)="onDelete()">Eliminar</ion-button>
     </ion-item>
 

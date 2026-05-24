@@ -1,13 +1,13 @@
 import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { IonGrid, IonRow, IonCol, IonList, IonItem, IonInput, IonButton, NavController, IonIcon, IonLabel } from '@ionic/angular/standalone';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { AuthService } from '../services/auth-service';
 import { GoogleLogin, UserLogin } from '../interfaces/auth';
 import { form, required, FormField, FormRoot, email } from '@angular/forms/signals';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SocialLogin } from '@capgo/capacitor-social-login';
 import { addIcons } from 'ionicons';
-import { logoGoogle } from 'ionicons/icons';
+import { logoFacebook, logoGoogle } from 'ionicons/icons';
 
 
 @Component({
@@ -23,11 +23,14 @@ export class LoginPage {
   #destroyRef = inject(DestroyRef)
 
   constructor() {
+    // Iconos
     addIcons({
-      logoGoogle
+      logoGoogle,
+      logoFacebook
     })
   }
 
+  // Formularios de login y login de google
   loginModel = signal<UserLogin>({
     email: "",
     password: ""
@@ -47,6 +50,7 @@ export class LoginPage {
     action: async () => this.login()
   }});
 
+  // Inicia sesion usando facebook
   async loginWithFaceBook() {
     const resp = await SocialLogin.login({
       provider: 'facebook',
@@ -63,6 +67,7 @@ export class LoginPage {
     }
   }
 
+  // Inicia sesion usando google
   async loginWithGoogle() {
     try {
       const resp = await SocialLogin.login({
@@ -85,6 +90,7 @@ export class LoginPage {
     }
   }
 
+  // Inicia sesion usando la api, el usuario y contraseña
   login()
   {  
     const result = this.#authService.login({...this.loginForm().value()});

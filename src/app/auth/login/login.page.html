@@ -2,11 +2,14 @@
   <ion-grid>
     <ion-row>
       <ion-col class="ion-display-flex ion-justify-content-center ion-align-content-center ion-padding">
+        <!-- Formulario de login -->
         <form class="login-form" [formRoot]="loginForm">
           <ion-list>
             <ion-item lines="none" class="ion-text-center">
               <h2>Log in</h2>
             </ion-item>
+
+            <!-- Email del usuario -->
             <ion-item lines="none">
               <ion-input 
                 [formField]="loginForm.email"
@@ -17,10 +20,10 @@
                 type="email" 
                 id="email"
                 [errorText]="loginForm.email().errors().length > 0 ? loginForm.email().errors()[0]?.message : ''"
-              >
-              </ion-input>
-          
+              />
             </ion-item>
+
+            <!-- Contraseña del usuario -->
             <ion-item lines="none">
               <ion-input 
                 [formField]="loginForm.password"
@@ -31,9 +34,10 @@
                 type="password" 
                 id="password"
                 [errorText]="loginForm.password().errors().length > 0 ? loginForm.password().errors()[0]?.message : ''"
-              >
-              </ion-input>
+              />
             </ion-item>
+
+            <!-- Boton de iniciar sesion con google -->
             <ion-item lines="none">
               <ion-button fill="solid" size="default" style="width: 100%;" color="danger" (click)="loginWithGoogle()">
                 <ion-icon name="logo-google" slot="start"></ion-icon>
@@ -41,18 +45,21 @@
             </ion-button>
             </ion-item>
             
+            <!-- Boton de iniciar sesion con facebook -->
             <ion-item lines="none">
-              <ion-button fill="solid" size="default" style="width: 100%;" color="primary" (click)="loginWithFaceBook()">
-                <ion-icon name="logo-google" slot="start"></ion-icon>
+              <ion-button fill="solid" size="default" style="width: 100%; margin-bottom: 2em;" color="primary" (click)="loginWithFaceBook()">
+                <ion-icon name="logo-facebook" slot="start"></ion-icon>
               <ion-label>Login with Facebook</ion-label>
             </ion-button>
             </ion-item>
-            
+            <!-- Boton de iniciar sesion -->
             <ion-item lines="none">
               <ion-button type="submit" color="primary" fill="solid" size="default" style="width: 100%;">
                 Login
               </ion-button>
             </ion-item>
+
+            <!-- Boton de registrarse -->
             <ion-item lines="none" class="ion-text-end">
               <ion-button 
               [routerLink]="['/auth/register']" 

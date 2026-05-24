@@ -27,7 +27,7 @@ export class TaskDetailsParticipantsPage {
 
   search = signal('');
   searchForm = form(this.search, schema => {
-    debounce(schema, 500)
+    debounce(schema, 600)
   });
 
   searchCorrecto = linkedSignal(() => this.search() != '' ?  this.search() : undefined )

@@ -8,6 +8,8 @@ export interface AuthToken {
 export interface RegisterData extends UserLogin {
   name: string;
   avatar: Base64URLString;
+  lat: number;
+  lng: number;
 }
 
 export interface ChangePassword {

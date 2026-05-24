@@ -57,6 +57,7 @@ export class AppComponent {
 
     this.initializeApp()
 
+    // Llama a userResource si hay una sesion iniciada para actualizar los datos mostrados del usuario
     effect(() => {
       if(this.sesion()) {
         this.#userResource.reload()

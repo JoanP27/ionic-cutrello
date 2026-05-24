@@ -1,7 +1,8 @@
 import { Component, DestroyRef, inject, linkedSignal, OnInit, signal, WritableSignal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonListHeader, IonItem, IonInput, IonTextarea, IonDatetimeButton, IonModal, IonDatetime, IonSelect, IonSelectOption, IonButton, IonIcon, IonImg, AlertController, IonButtons, IonItemDivider, NavController } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonListHeader, IonItem, IonInput, IonTextarea, IonDatetimeButton, IonModal, IonDatetime, IonSelect, IonSelectOption, IonButton, IonIcon, IonImg, AlertController, IonButtons, IonItemDivider, NavController, IonRouterLink, IonFabButton, IonFab } from '@ionic/angular/standalone';
 import { TaskDetailsPage } from '../task-details/task-details.page';
 import { form, FormField, required, schema, FormRoot } from "@angular/forms/signals";
 import { Task } from '../interfaces/task';
@@ -9,13 +10,14 @@ import { minDate } from 'src/app/shared/validators/minDay';
 import { TaskService } from '../services/task-service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { addIcons } from 'ionicons';
-import { images, link } from 'ionicons/icons';
+import { images, link, map } from 'ionicons/icons';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { Router } from '@angular/router';
 import { SearchResult } from 'src/app/ol-maps/search-result';
 import { OlMap } from "src/app/ol-maps/ol-map";
 import { GaAutocomplete } from "src/app/ol-maps/ga-autocomplete";
 import { OlMarker } from "src/app/ol-maps/ol-marker";
+import { LaunchNavigator } from '@capgo/capacitor-launch-navigator';
 
 @Component({
   selector: 'app-task-details-info',
@@ -48,7 +50,10 @@ import { OlMarker } from "src/app/ol-maps/ol-marker";
     FormRoot,
     OlMap,
     GaAutocomplete,
-    OlMarker
+    OlMarker,
+    RouterLink,
+    IonFabButton,
+    IonFab
 ]
 })
 export class TaskDetailsInfoPage {
@@ -56,7 +61,8 @@ export class TaskDetailsInfoPage {
 
   constructor() {
     addIcons({
-      images
+      images,
+      map
     })
   }
 
@@ -113,6 +119,9 @@ export class TaskDetailsInfoPage {
     this.isEditModalOpen.update(() => open)
   }
 
+  public showMap() {
+    LaunchNavigator.navigate({ destination: [ this.coordinates()[1], this.coordinates()[0] ]});
+  }
 
  /* public async showEditAlert() {
     const alert = await this.#alertController.create({

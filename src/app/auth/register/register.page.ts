@@ -11,7 +11,9 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { EncodeBase64Directive } from '../../shared/directives/encode-base64-directive';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { addIcons } from 'ionicons';
-import { images } from 'ionicons/icons';
+import { camera, images } from 'ionicons/icons';
+import { Geolocation } from '@capacitor/geolocation';
+
 
 @Component({
   selector: 'app-register-page',
@@ -38,7 +40,7 @@ export class RegisterPage  {
     required(schema.name, {message: 'El nombre es obligatorio'});
     required(schema.email, {message: 'El email es obligatorio'});
     email(schema.email, {message: 'formato incorrecto, escribe un correo valido'})
-    required(schema.avatar, {message: 'El email es obligatorio'});
+    //required(schema.avatar, {message: 'El avatar es obligatorio'});
     required(schema.password, {message: 'La contraseña es obligatoria'})
     minLength(schema.password, 4, {message: 'La contraseña tiene que tener minimo 4 caracteres'})
     required(schema.repassword, {message: 'La contraseña es obligatoria'})
@@ -51,42 +53,71 @@ export class RegisterPage  {
 
       return null;
     })
-  },{submission: {action: async () => this.register()}}) 
+  },{submission: {action: async () => {
+    console.log('¿Es válido?', this.registerForm().valid());
+    console.log('Errores:', this.registerForm().errors());
+    this.register()
+  }}}) 
 
   public auxAvatar = linkedSignal(() => this.registerModel().avatar)
 
-  protected register() {
-    const registerData : WritableSignal<RegisterData>= linkedSignal(() => {
-      return {
+  protected async register() {
+    console.log("entra")
+    try {
+      const position = await Geolocation.getCurrentPosition({
+      enableHighAccuracy: true,
+      timeout: 5000,
+    })
+
+    const registerData: RegisterData = {
         name: this.registerModel().name,
         avatar: this.registerModel().avatar,
         password: this.registerModel().password,
-        repassword: this.registerModel().repassword,
         email: this.registerModel().email,
-        
-      }
-    })
-
-    const result = this.#authService.register(registerData())
+        lat: position.coords.latitude ?? 0,
+        lng: position.coords.longitude ?? 0
+      };
+    
+    const result = this.#authService.register(registerData)
 
      result.pipe(takeUntilDestroyed(this.#destroyRef)).subscribe({
         next:() => this.#router.navigate(['/auth/login'])
      })
+    }catch(e) {
+      console.error(e)
+    }
+    
   }
+
+  async takePhoto() {
+    const photo = await Camera.getPhoto({
+      source: CameraSource.Camera,
+      quality: 90,
+      width: 400,
+      //allowEditing: true, // El usuario puede editar la foto antes de devolverla
+      resultType: CameraResultType.DataUrl, // Base64 (url encoded)
+    });
+
+    this.auxAvatar.set(photo.dataUrl as string);
+    this.registerModel().avatar = (photo.dataUrl as string);
+  }
+
   public async pickFromGallery() {
     const photo = await Camera.getPhoto({
       source: CameraSource.Photos,
-      height: 640,
-      width: 640,
-      // allowEditing: true,
+      height: 400,
+      width: 400,
+      //allowEditing: true,
       resultType: CameraResultType.DataUrl, // Base64 (url encoded)
     });
     this.auxAvatar.set(photo.dataUrl as string);
     this.registerModel().avatar = (photo.dataUrl as string);
   }
+
   constructor() {
     addIcons({
-      images
+      images,
+      camera
     })
   }
 }
