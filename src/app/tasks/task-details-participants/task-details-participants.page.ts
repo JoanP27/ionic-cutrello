@@ -1,20 +1,22 @@
 import { Component, computed, DestroyRef, inject, linkedSignal, model, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonItem, IonAvatar, IonLabel, IonBadge, IonButton, IonFab, IonFabButton, IonIcon, IonInput } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonItem, IonAvatar, IonLabel, IonBadge, IonButton, IonFab, IonFabButton, IonIcon, IonInput, IonModal, IonButtons } from '@ionic/angular/standalone';
 import { TaskService } from '../services/task-service';
 import { ProfileService } from 'src/app/profile/services/profile-service';
 import { User } from 'src/app/profile/interfaces/user';
 import { debounce, form, FormField } from '@angular/forms/signals';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TaskDetailsPage } from '../task-details/task-details.page';
+import { addIcons } from 'ionicons';
+import { add } from 'ionicons/icons';
 
 @Component({
   selector: 'app-task-details-participants',
   templateUrl: './task-details-participants.page.html',
   styleUrls: ['./task-details-participants.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonList, IonItem, IonAvatar, IonLabel, IonBadge, IonButton, IonFab, IonFabButton, IonIcon, IonInput, FormField]
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonList, IonItem, IonAvatar, IonLabel, IonBadge, IonButton, IonFab, IonFabButton, IonIcon, IonInput, FormField, IonModal, IonButtons]
 })
 export class TaskDetailsParticipantsPage {
   #service = inject(ProfileService)
@@ -22,6 +24,8 @@ export class TaskDetailsParticipantsPage {
   #destroyRef = inject(DestroyRef);
 
   task = inject(TaskDetailsPage).task
+
+  isAddParticipantOpen = signal<boolean>(false);
 
   participantes = linkedSignal(() => this.task().participants)
 
@@ -41,6 +45,11 @@ export class TaskDetailsParticipantsPage {
   idCreador = linkedSignal(() => this.task().creator)
   idTarea = model.required<number>();
  
+
+  changeAddParticipantVisibility(isOpen : boolean) {
+    this.isAddParticipantOpen.set(isOpen)
+  }
+
   eliminar(participante: User) {
     if(this.participantes().filter(p => p.id === participante.id).length > 0) {
       console.log(participante)
@@ -69,6 +78,13 @@ export class TaskDetailsParticipantsPage {
       });  
     }
   }
-  constructor() { }
+  constructor() { 
+    addIcons(
+      {
+        add
+
+      }
+    )
+  }
 
 }

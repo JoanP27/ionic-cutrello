@@ -4,26 +4,11 @@
   </ion-toolbar>
 </ion-header>
 <ion-content [fullscreen]="true">
-  <ion-list>
-    <ion-item lines="none">
-      <ion-input
-        placeholder="Buscar participantes"
-        type="text"
-        [formField]="this.searchForm"
-      />
-    </ion-item>
-        @for (r of this.searchResults(); track $index) {
-          <ion-item lines="none">
-            <ion-avatar slot="start">
-              <img [src]="r.avatar"/>
-            </ion-avatar>
-            <ion-label slot="start" style="display: flex; justify-items: center; align-items: center; gap: 20px;">
-              <h2>{{r.name}}</h2>
-            </ion-label>
-            <ion-button [disabled]="this.participantes().filter(p => p.id == r.id).length > 0" slot="end" color="primary" (click)="this.anyadirParticipante(r)">Añadir</ion-button>
-          </ion-item>
-        }
-  </ion-list>
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="changeAddParticipantVisibility(true)">
+      <ion-icon name="add" ></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
   <ion-list lines="none" style="margin-top: 0.5em;">
       @for (p of this.participantes(); track $index) {
         <ion-item lines="none">
@@ -42,4 +27,38 @@
         </ion-item>
       }
   </ion-list>
+  <ion-modal [isOpen]="isAddParticipantOpen()">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Editar Tarea</ion-title>
+          <ion-buttons slot="end">
+            <ion-button color="danger" (click)="changeAddParticipantVisibility(false)">Cerrar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+        <ion-content>
+          <ion-list>
+          <ion-item lines="none">
+            <ion-input
+              placeholder="Buscar participantes"
+              type="text"
+              [formField]="this.searchForm"
+            />
+          </ion-item>
+          @for (r of this.searchResults(); track $index) {
+            <ion-item lines="none">
+              <ion-avatar slot="start">
+                <img [src]="r.avatar"/>
+              </ion-avatar>
+              <ion-label slot="start" style="display: flex; justify-items: center; align-items: center; gap: 20px;">
+                <h2>{{r.name}}</h2>
+              </ion-label>
+              <ion-button [disabled]="this.participantes().filter(p => p.id == r.id).length > 0" slot="end" color="primary" (click)="this.anyadirParticipante(r)">Añadir</ion-button>
+            </ion-item>
+          }
+        </ion-list>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 </ion-content>
