@@ -47,6 +47,21 @@ export class LoginPage {
     action: async () => this.login()
   }});
 
+  async loginWithFaceBook() {
+    const resp = await SocialLogin.login({
+      provider: 'facebook',
+      options: {
+        permissions: ['email']
+      }
+    })
+    if (resp.result.accessToken) {
+      this.#authService.LoginWithFacebook(resp.result.accessToken.token).subscribe({
+        next: () => {
+          this.#nav.navigateRoot('/tasks')
+        }
+      })
+    }
+  }
 
   async loginWithGoogle() {
     try {

@@ -49,11 +49,18 @@ export class AuthService {
     }))
   }
 
+  public LoginWithFacebook(token: String): Observable<void>{
+    return  this.#http.post<AuthToken>(`${this.#authUrl}facebook`, {token: token}).pipe(switchMap(async (token) => {
+      console.log('esto es un token: ', token.accessToken)
+      await Preferences.set({ key: 'fs-token', value: token.accessToken })
+      this.#logged.set(true)
+    }))
+  }
+
   public logingWithGoogle(token: string): Observable<void> {
     return this.#http.post<AuthToken>(`${this.#authUrl}google`, {'token': token}).pipe(switchMap(async (token) => {
       console.log('esto es un token: ', token.accessToken)
       await Preferences.set({ key: 'fs-token', value: token.accessToken })
-      //localStorage.setItem('token', token.accessToken);
       this.#logged.set(true)
     }));
   }

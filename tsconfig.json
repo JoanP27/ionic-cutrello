@@ -20,7 +20,7 @@
     "module": "es2020",
     "skipLibCheck": true,
     "useDefineForClassFields": false,
-    "types": ["google.accounts"]
+    "types": ["google.accounts", "facebook-js-sdk"]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

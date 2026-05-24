@@ -24,6 +24,7 @@ import {
 } from '@angular/forms/signals';
 import { authInterceptor } from './app/shared/interceptors/auth-interceptor';
 import { provideGoogleId } from './app/shared/google-login/google-login.config';
+import { provideFacebookId } from './app/shared/facebook-login/facebook-login.config';
 
 export const NG_STATUS_CLASSES: SignalFormsConfig['classes'] = {
   'ng-touched': ({ state }) => state().touched(),
@@ -44,6 +45,7 @@ bootstrapApplication(AppComponent, {
     provideRouter(routes, withPreloading(PreloadAllModules), withRouterConfig({paramsInheritanceStrategy: 'always'}), withComponentInputBinding()),
     provideHttpClient(withInterceptors([baseUrlInterceptor, authInterceptor])),
     provideGoogleId('389388754773-5jflblnhhm4qfmk8mf0egdu5die7epda.apps.googleusercontent.com'),
+    provideFacebookId('2137417053746557', 'v25.0'),
     provideSignalFormsConfig({
       classes: NG_STATUS_CLASSES,
     }),

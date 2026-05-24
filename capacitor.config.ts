@@ -9,10 +9,18 @@ const config: CapacitorConfig = {
   },
   plugins: {
     SocialLogin: {
+      providers: {
+        google: true,
+        facebook: true
+      },
       google: {
         // El Client ID del proyecto del profesor que sacamos del JSON
         webClientId: '389388754773-5jflblnhhm4qfmk8mf0egdu5die7epda.apps.googleusercontent.com',
-      }
+      },
+      facebook: {
+        appId: '2137417053746557',
+        clientToken: '7186128b054a011a92d1dbdfdcdb0e4b',
+      },
     }
   }
 };
